@@ -23,14 +23,19 @@ let getBooks = () => {
 
 let addBook = (bookTitle) => {
   // add a book if the title is not in the table
+  return pg('books').insert(bookTitle).returning('id')
 }
 
 let addCharacter = (characterName) => {
+  console.log(characterName)
   // add a character if the character is not in the table
+  return pg('characters').insert(characterName).returning('id')
 }
 
 let addJoin = (book, name) => {
   // add a relationship between a character and a book if it does not exist
+  let bookName = {book_id: book[0], character_id: name[0]}
+  return pg('book_character').insert(bookName).returning('id')
 }
 
 module.exports = {
